@@ -9,6 +9,7 @@ import { ListingAbout } from "@/components/listing/listing-about";
 import { ListingBookedRanges } from "@/components/listing/listing-booked-ranges";
 import { ListingMap } from "@/components/listing/listing-map";
 import { ListingBookingSidebar } from "@/components/listing/listing-booking-sidebar";
+
 type ListingPageProps = {
     params: Promise<{
         listingId: string;
@@ -23,32 +24,49 @@ type ListingPageProps = {
         infants?: string;
     }>;
 };
+
 export default async function ListingPage({ params, searchParams }: ListingPageProps) {
     const { listingId } = await params;
+
+    console.log("PRODUCTION DEBUG - PARAMS:", params);
+    console.log("PRODUCTION DEBUG - LISTING ID:", listingId);
+
     const query = await searchParams;
     const demoProperties = await fetchDemoProperties();
     const demoListingSeed = demoProperties.find((property) => property.id === listingId);
+
+    console.log("BEFORE FIRST PRISMA LISTING QUERY:", listingId);
+
     let dbListing = await prisma.listing.findUnique({
         where: { id: listingId },
         include: { user: true }
     });
+
     const shouldSyncDemoRows = Boolean(demoListingSeed) &&
         (!dbListing || dbListing.category === "Demo Stay");
+
     if (shouldSyncDemoRows) {
         await syncDemoListingById(listingId);
+
+        console.log("BEFORE SECOND PRISMA LISTING QUERY:", listingId);
+
         dbListing = await prisma.listing.findUnique({
             where: { id: listingId },
             include: { user: true }
         });
     }
+
     const user = await getCurrentUser();
     const isDemoListing = Boolean(demoListingSeed && dbListing?.category === "Demo Stay");
     const demoListing = demoListingSeed;
     const hostRating = demoListing?.rating ?? 4.9;
+
     if (!dbListing && !demoListing)
         notFound();
+
     if (demoListing && !dbListing)
         notFound();
+
     const listing = dbListing
         ? {
             id: dbListing.id,
@@ -78,6 +96,7 @@ export default async function ListingPage({ params, searchParams }: ListingPageP
             bathroomCount: Math.max(1, Math.round(demoListing!.maxGuests / 3)),
             hostName: demoListing!.hostName
         };
+
     const [reservationCount, recentReservations, userActiveReservation] = await Promise.all([
         prisma.reservation.count({
             where: { listingId }
@@ -99,10 +118,12 @@ export default async function ListingPage({ params, searchParams }: ListingPageP
             })
             : Promise.resolve(null)
     ]);
+
     const bookedRanges = recentReservations.map((reservation) => ({
         startDate: reservation.startDate,
         endDate: reservation.endDate
     }));
+
     const bookingStatus = query.booking === "success" || query.booking === "error" ? query.booking : null;
     const bookingMessage = query.message ?? null;
     const initialCheckIn = query.checkIn;
@@ -110,6 +131,7 @@ export default async function ListingPage({ params, searchParams }: ListingPageP
     const initialAdults = query.adults;
     const initialChildren = query.children;
     const initialInfants = query.infants;
+
     return (<main className="mx-auto min-h-screen max-w-7xl px-4 pb-28 pt-5 md:px-8 md:pb-10 md:pt-8">
       <article className="space-y-6 md:space-y-8">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] lg:items-start">
