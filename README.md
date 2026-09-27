@@ -56,6 +56,12 @@ Nilayam provides a complete accommodation-booking experience.
 - Responsive user interface
 - PostgreSQL persistence
 
+### Google Sign-In
+
+Google Sign-In is currently unavailable on the deployed AWS version because the application uses an AWS Application Load Balancer URL instead of a custom domain. Google does not accept the AWS ALB hostname as an authorised OAuth redirect domain, resulting in a `redirect_uri_mismatch` error.
+
+Email/password sign-in is fully functional.
+
 ### Engineering Features
 
 - Docker containerisation
