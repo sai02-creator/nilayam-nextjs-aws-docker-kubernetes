@@ -28,14 +28,9 @@ type ListingPageProps = {
 export default async function ListingPage({ params, searchParams }: ListingPageProps) {
     const { listingId } = await params;
 
-    console.log("PRODUCTION DEBUG - PARAMS:", params);
-    console.log("PRODUCTION DEBUG - LISTING ID:", listingId);
-
     const query = await searchParams;
     const demoProperties = await fetchDemoProperties();
     const demoListingSeed = demoProperties.find((property) => property.id === listingId);
-
-    console.log("BEFORE FIRST PRISMA LISTING QUERY:", listingId);
 
     let dbListing = await prisma.listing.findUnique({
         where: { id: listingId },
@@ -47,8 +42,6 @@ export default async function ListingPage({ params, searchParams }: ListingPageP
 
     if (shouldSyncDemoRows) {
         await syncDemoListingById(listingId);
-
-        console.log("BEFORE SECOND PRISMA LISTING QUERY:", listingId);
 
         dbListing = await prisma.listing.findUnique({
             where: { id: listingId },
