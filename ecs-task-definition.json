@@ -42,6 +42,10 @@
         {
           "name": "GOOGLE_CLIENT_SECRET",
           "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:867041163374:secret:nilayam/GOOGLE_CLIENT_SECRET-A3Uz4P"
+        },
+        {
+          "name": "UPLOADTHING_TOKEN",
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:867041163374:secret:nilayam/UPLOADTHING_TOKEN-sTfMAr"
         }
       ],
       "logConfiguration": {
