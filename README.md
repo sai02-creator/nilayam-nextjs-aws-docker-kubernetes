@@ -1,22 +1,15 @@
-# 🏡 Nilayam — Full-Stack Airbnb-Style Rental Platform
+# Nilayam — Full-Stack Rental Platform
 
-Nilayam is a full-stack accommodation marketplace inspired by platforms such as Airbnb. Users can discover properties, view detailed listings, authenticate securely, create reservations, and manage their bookings.
+A production-deployed, full-stack accommodation marketplace built with **Next.js, TypeScript, React, Node.js, PostgreSQL, Prisma, Docker, AWS, Terraform, GitHub Actions, and Kubernetes**.
 
-The project covers the complete software delivery lifecycle:
-
-**Full-Stack Development → PostgreSQL → Docker → AWS → Terraform → CI/CD → Kubernetes**
-
-Built with **Next.js, TypeScript, PostgreSQL, Prisma, Docker, AWS, Terraform, GitHub Actions, and Kubernetes**, Nilayam demonstrates modern full-stack development together with cloud deployment, Infrastructure as Code, containerisation, automated deployment, and container orchestration.
-
----
+Nilayam demonstrates the complete software delivery lifecycle — from application development and database design through containerisation, Infrastructure as Code, automated testing, CI/CD, cloud deployment, and container orchestration.
 
 ## 🚀 Live Application
 
-**Production:**
-
+**Production:**  
 http://nilayam-alb-1594002907.ap-southeast-2.elb.amazonaws.com
 
-The production application is deployed using:
+### Production Environment
 
 - Amazon ECS
 - AWS Fargate
@@ -24,266 +17,245 @@ The production application is deployed using:
 - Amazon ECR
 - Neon PostgreSQL
 
-> **Note:** The current production URL uses HTTP. HTTPS and a custom domain are planned future improvements.
+> **Note:** The current production endpoint uses HTTP. HTTPS and a custom domain are planned improvements.
 
 ---
 
-# 📸 Application Preview
+## 📌 What Nilayam Does
 
-![Nilayam – Full-Stack Airbnb-Style Rental Platform](./screenshots/nilayam-home.png)
+Nilayam is an Airbnb-style accommodation marketplace where users can:
 
----
+- Create accounts and authenticate
+- Browse and search property listings
+- View detailed property information
+- Create and manage reservations
+- Cancel reservations
+- Manage property listings
+- View images, locations, pricing and accommodation details
+- Use a responsive web interface
 
-# 📌 Features
+### Authentication
 
-## Core Features
-
-- User registration
-- User authentication
-- User login and logout
-- Property listing creation
-- Property discovery
-- Property categories
-- Property detail pages
-- Image galleries
-- Location information
-- Guest information
-- Room information
-- Bathroom information
-- Price-per-night information
-- Reservation creation
-- Reservation management
-- Reservation cancellation
-- Responsive user interface
-- PostgreSQL persistence
-
-## Google Sign-In
-
-Google Sign-In is currently unavailable on the deployed AWS version because the application uses an AWS Application Load Balancer URL instead of a custom domain.
-
-Google does not accept the AWS ALB hostname as an authorised OAuth redirect domain, resulting in a `redirect_uri_mismatch` error.
-
-Email/password authentication is fully functional.
+- Email/password authentication is functional.
+- Google Sign-In is implemented but is currently unavailable in the deployed AWS environment because the Application Load Balancer hostname is not configured as an authorised Google OAuth redirect domain.
 
 ---
 
-# 🛠️ Technology Stack
+## 🛠️ Technology Stack
 
-| Area                   | Technologies                                                                                          |
-| ---------------------- | ----------------------------------------------------------------------------------------------------- |
-| Frontend               | Next.js, React, TypeScript, Tailwind CSS, Lucide React, date-fns                                      |
-| Backend                | Next.js Server Actions, NextAuth, Prisma ORM, Node.js                                                 |
-| Database               | PostgreSQL, Neon PostgreSQL                                                                           |
-| Containerisation       | Docker, Docker Desktop                                                                                |
-| AWS                    | Amazon ECR, Amazon ECS, AWS Fargate, Application Load Balancer, Amazon VPC, Security Groups, IAM      |
-| Infrastructure as Code | Terraform                                                                                             |
-| CI/CD                  | GitHub Actions                                                                                        |
-| Kubernetes             | Kubernetes, Docker Desktop Kubernetes, kind-based local cluster, Deployments, Pods, Services, Secrets |
+### Frontend
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Lucide React
+
+### Backend
+
+- Next.js Server Actions
+- Node.js
+- NextAuth
+- Prisma ORM
+
+### Database
+
+- PostgreSQL
+- Neon PostgreSQL
+- Prisma migrations
+- Relational data modelling
+
+### Cloud & Infrastructure
+
+- AWS VPC
+- Amazon ECS
+- AWS Fargate
+- Amazon ECR
+- Application Load Balancer
+- Security Groups
+- IAM
+- Terraform
+
+### DevOps & Containers
+
+- Docker
+- GitHub Actions
+- GitHub Actions CI/CD
+- Vitest
+- Playwright
+- Testing Library
+- Kubernetes
+- Kubernetes Secrets
 
 ---
 
-# 🏗️ Architecture
+## 🏗️ Architecture
 
-## Production Architecture
+### Production Architecture
 
 ```text
-                         Internet
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   AWS ALB           │
-                 │   HTTP :80          │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   ECS Service       │
-                 │   AWS Fargate       │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   Nilayam Container │
-                 │   Next.js :3000     │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   Neon PostgreSQL   │
-                 └─────────────────────┘
-```
-
-### Production Request Flow
-
-```text
-User
- │
- ▼
 Internet
- │
- ▼
+   │
+   ▼
 Application Load Balancer
- │
- ▼
+   │
+   ▼
 ECS Service
- │
- ▼
+   │
+   ▼
 AWS Fargate Task
- │
- ▼
-Nilayam Next.js Container
- │
- ▼
+   │
+   ▼
+Next.js Container :3000
+   │
+   ▼
 Neon PostgreSQL
 ```
 
-The Application Load Balancer provides the public entry point while the ECS service runs the containerised application on AWS Fargate.
+The Application Load Balancer provides the public entry point, while ECS/Fargate runs the containerised application.
 
----
-
-# ☁️ AWS Infrastructure
-
-Nilayam's AWS infrastructure is managed using **Terraform**.
-
-## AWS Resources
+### AWS Infrastructure
 
 ```text
 AWS
-│
 ├── VPC
-│
-├── Subnets
-│
+│   └── Subnets
 ├── Security Groups
-│
 ├── Amazon ECR
-│
 ├── ECS Cluster
-│
-├── ECS Service
-│
-├── ECS Task Definition
-│
-├── AWS Fargate
-│
+│   └── ECS Service
+│       └── Fargate Task
 ├── Application Load Balancer
-│
-├── Target Group
-│
-├── ALB Listener
-│
+│   ├── Listener
+│   └── Target Group
 └── IAM Execution Role
 ```
 
-## AWS Architecture
-
-```text
-                         AWS
-                          │
-          ┌───────────────┴───────────────┐
-          │                               │
-         VPC                             ECR
-          │                               │
-     ┌────┴────┐                          │
-     │         │                          │
-   Subnet    Subnet                       │
-     │         │                          │
-     └────┬────┘                          │
-          │                               │
-          ▼                               │
-     ECS Cluster ◄────────────────────────┘
-          │
-          ▼
-     ECS Service
-          │
-          ▼
-      Fargate Task
-          │
-          ▼
-     Nilayam :3000
-          ▲
-          │
-     Target Group
-          ▲
-          │
-         ALB
-          ▲
-          │
-       Internet
-```
+Infrastructure is defined and managed with Terraform rather than relying solely on manual AWS Console configuration.
 
 ---
 
-# 🔄 CI/CD Pipeline
+## 🔄 CI/CD Pipeline
 
-Every push to the `main` branch triggers the GitHub Actions deployment workflow.
+Nilayam uses **GitHub Actions to automate testing and deployment**. The workflow is defined in `.github/workflows/deploy.yml`.
+
+Automated tests run on pushes to `main` and pull requests. The deployment job is configured to run on pushes to `main` and depends on the test job succeeding.
+
+### Pipeline Workflow
 
 ```text
-Developer
-   │
-   ▼
-Git Push
-   │
-   ▼
+Code Changes
+     │
+     ▼
+Git Push / Pull Request
+     │
+     ▼
 GitHub Actions
-   │
-   ├── Checkout repository
-   │
-   ├── Configure AWS credentials
-   │
-   ├── Login to Amazon ECR
-   │
-   ├── Build Docker image
-   │
-   ├── Push image to ECR
-   │
-   ├── Download current ECS task definition
-   │
-   ├── Update container image
-   │
-   └── Deploy new task definition
+     │
+     ▼
+Install Dependencies
+     │
+     ▼
+Generate Prisma Client
+     │
+     ▼
+Run Vitest Tests
+     │
+     ▼
+Install Playwright Chromium
+     │
+     ▼
+Run End-to-End Tests
+     │
+     ▼
+Tests Pass?
+     │
+     ├── No ──► Deployment Blocked
+     │
+     └── Yes
            │
            ▼
-     ECS / Fargate
+      Main Branch Push?
            │
            ▼
-  Application Load Balancer
+      Build Docker Image
            │
            ▼
-        Nilayam
+      Authenticate with AWS
+           │
+           ▼
+      Push Image to Amazon ECR
+           │
+           ▼
+      Update ECS Task Definition
+           │
+           ▼
+      Deploy to ECS / Fargate
+           │
+           ▼
+      Application Load Balancer
+           │
+           ▼
+      Live Nilayam Application
 ```
 
-Docker images are tagged using the **GitHub commit SHA**, allowing each deployment to be traced back to the exact source commit that produced the image.
+### Automated Testing
 
-The workflow is located at:
+**Unit and integration tests**
 
-```text
-.github/workflows/deploy.yml
+Vitest is used to test application logic, including booking rules, date utilities and integration-related logic.
+
+**End-to-end testing**
+
+Playwright with Chromium is used to test the application through a browser. The current end-to-end suite includes a homepage smoke test.
+
+**Prisma Client generation**
+
+Prisma Client is generated during dependency installation using the `postinstall` script in `package.json`. The Docker build also explicitly generates Prisma Client before building the production application.
+
+**Deployment gate**
+
+The deployment job depends on the automated test job. If the test job fails, the deployment job does not proceed.
+
+### Run Tests Locally
+
+Run the Vitest suite:
+
+```bash
+npm test
 ```
 
-### Deployment Steps
+Run tests in watch mode:
 
-A push to `main` automatically:
+```bash
+npm run test:watch
+```
 
-1. Checks out the repository
-2. Configures AWS credentials
-3. Logs into Amazon ECR
-4. Builds the Docker image
-5. Pushes the image to ECR
-6. Downloads the current ECS task definition
-7. Updates the container image
-8. Deploys the updated task definition to ECS
-9. Waits for ECS service stability
+Run the Playwright end-to-end suite:
 
-AWS credentials used by GitHub Actions are stored as **GitHub repository secrets** rather than committed to the repository.
+```bash
+npm run test:e2e
+```
+
+### Build the Docker Image
+
+```bash
+docker build -t nilayam:latest .
+```
+
+### CI/CD Verification
+
+The GitHub Actions workflow completed successfully for commit `fc3842d`, including the automated test and deployment jobs. The deployed application was subsequently checked and confirmed to be working.
+
+Docker images are tagged using the GitHub commit SHA, allowing deployments to be traced back to the source commit that produced them.
+
+AWS credentials are stored as GitHub repository secrets rather than committed to the repository.
 
 ---
 
-# 🐳 Docker
+## 🐳 Docker
 
-Nilayam is containerised using Docker.
-
-The Docker image contains:
+Nilayam is packaged as a production Docker image containing:
 
 - Node.js
 - Next.js application
@@ -291,9 +263,9 @@ The Docker image contains:
 - Application dependencies
 - Production build
 
-Database credentials are not included in the Docker image.
+The Docker image does not contain database credentials.
 
-## Dockerfile
+### Dockerfile
 
 ```dockerfile
 FROM node:22-alpine
@@ -301,6 +273,8 @@ FROM node:22-alpine
 WORKDIR /app
 
 COPY package*.json ./
+COPY prisma ./prisma
+COPY prisma.config.ts ./
 
 RUN npm ci
 
@@ -315,19 +289,23 @@ EXPOSE 3000
 CMD ["npm", "start"]
 ```
 
-## Build Locally
+The Prisma schema and configuration are copied before `npm ci` because the installation process runs Prisma Client generation through the `postinstall` script.
+
+### Run Locally
+
+Build the image:
 
 ```bash
 docker build -t nilayam:latest .
 ```
 
-## Run Locally
+Run the container with local environment variables configured in `.env`:
 
 ```bash
 docker run --env-file .env -p 3000:3000 nilayam:latest
 ```
 
-Open:
+The application will be available at:
 
 ```text
 http://localhost:3000
@@ -335,110 +313,50 @@ http://localhost:3000
 
 ---
 
-# 🗄️ Database
+## 🗄️ Database
 
-Nilayam uses **PostgreSQL hosted by Neon**.
+Nilayam uses **PostgreSQL hosted on Neon**, with Prisma providing the application data layer.
 
-**Prisma ORM** is used for:
+Prisma is used for:
 
 - Database access
 - Schema definition
-- Prisma Client generation
-- Database migrations
+- Client generation
+- Migrations
 - Relational data modelling
 
-## Main Data Model
+### Core Relationships
 
 ```text
 User
-│
 ├── Account
-│
 ├── Session
-│
 ├── Listing
-│
 └── Reservation
-```
 
-```text
 Listing
-│
 └── Reservation
 ```
 
-## Main Entities
-
-### User
-
-Stores user accounts and authentication-related information.
-
-### Listing
-
-Stores accommodation information including:
-
-- Title
-- Description
-- Images
-- Category
-- Guest count
-- Room count
-- Bathroom count
-- Location
-- Price per night
-- Host
-
-### Reservation
-
-Stores:
-
-- User
-- Listing
-- Start date
-- End date
-- Total price
-- Creation date
+Reservations connect users with listings and store booking dates, pricing and creation information.
 
 ---
 
-# 🔐 Environment Variables & Secrets
+## 🔐 Security & Configuration
 
 Sensitive configuration is kept outside the application source code.
 
-Example:
+Implemented practices include:
 
-```env
-DATABASE_URL=your_database_connection_string
-```
+- `.env` excluded from Git
+- Runtime environment variables
+- Kubernetes Secrets for local Kubernetes deployment
+- Database credentials excluded from Docker images
+- AWS credentials stored as GitHub Actions secrets
+- ECS Security Groups controlling application traffic
+- Public access routed through the Application Load Balancer rather than directly exposing the application container port
 
-Authentication-related environment variables may also be required depending on the configured authentication providers.
-
-> **Important:** Never commit `.env` to Git.
-
-Environment-specific credentials are supplied at runtime rather than being stored in application source code or Docker images.
-
-## Kubernetes Secrets
-
-The local Kubernetes deployment uses a **Kubernetes Secret** for sensitive environment variables.
-
-Create the Secret from the local `.env` file:
-
-```bash
-kubectl create secret generic nilayam-secrets \
-  --from-env-file=.env
-```
-
-The Secret is intentionally **not committed to GitHub**.
-
-The Kubernetes Deployment references the Secret:
-
-```yaml
-envFrom:
-  - secretRef:
-      name: nilayam-secrets
-```
-
-The runtime configuration is separated from the application image:
+### Runtime Configuration
 
 ```text
 Application Code
@@ -447,229 +365,109 @@ Application Code
 Docker Image
       │
       ▼
-Kubernetes Deployment
+Runtime Environment
       │
-      ├──────────────► Application
-      │
-      └──────────────► Kubernetes Secret
-                             │
-                             ▼
-                      Runtime Variables
+      ├── AWS ECS / Fargate
+      └── Kubernetes Secret
 ```
+
+### Environment Variables
+
+Create a local `.env` file containing the required configuration. For example:
+
+```env
+DATABASE_URL=your_database_connection_string
+```
+
+Use the environment variables required by the application's authentication and database configuration.
+
+**Never commit `.env` files, database credentials, OAuth secrets or AWS credentials to Git.**
 
 ---
 
-# ☸️ Kubernetes
+## ☸️ Kubernetes
 
-Nilayam can also be deployed locally using Kubernetes through Docker Desktop.
+Kubernetes is used locally for container orchestration practice and development.
 
-The Kubernetes environment is intentionally **local and cost-conscious**.
+### Local Architecture
 
 ```text
 Docker Desktop
-     │
-     ▼
+      │
+      ▼
 Kubernetes Cluster
-     │
-     ▼
+      │
+      ▼
 Deployment
-     │
-     ▼
+      │
+      ▼
 Pod
-     │
-     ▼
+      │
+      ▼
 Nilayam Container
-```
-
-The local cluster uses a single-node **kind-based Kubernetes cluster** provided through Docker Desktop.
-
-Kubernetes is currently used for **learning, development and container-orchestration practice**, rather than production.
-
-Production remains on **AWS ECS/Fargate**.
-
-## Kubernetes Deployment
-
-The Kubernetes Deployment manages the Nilayam application Pod.
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nilayam
-spec:
-  replicas: 1
-```
-
-The Deployment provides declarative workload management and maintains the desired number of running Pods.
-
-Responsibilities include:
-
-- Managing Pods
-- Maintaining desired replicas
-- Recreating failed Pods
-- Declarative workload management
-- Supporting rolling updates
-
-## Kubernetes Service
-
-The Nilayam Service provides networking for the application.
-
-The project currently uses a **NodePort Service** for local Kubernetes development.
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: nilayam-service
-spec:
-  selector:
-    app: nilayam
-  ports:
-    - protocol: TCP
-      port: 3000
-      targetPort: 3000
-  type: NodePort
-```
-
-## Kubernetes Files
-
-```text
-k8s/
-├── deployment.yaml
-└── service.yaml
-```
-
-## Kubernetes Application Flow
-
-```text
-Docker Image
-     │
-     ▼
-Kubernetes Deployment
-     │
-     ▼
-Nilayam Pod
-     │
-     ▼
-Nilayam Container
-     │
-     ▼
+      │
+      ▼
 Kubernetes Service
-     │
-     ▼
-localhost:3000
 ```
 
-Runtime secrets are supplied separately:
+The local deployment uses:
 
-```text
-Kubernetes Secret
-      │
-      ▼
-  Nilayam Pod
-      │
-      ▼
- DATABASE_URL
-      │
-      ▼
-Neon PostgreSQL
-```
+- Deployment
+- Pod
+- Service
+- Secret
 
----
+The Kubernetes environment is intentionally local and cost-conscious. Production remains on AWS ECS/Fargate.
 
-# ▶️ Running Nilayam on Kubernetes
+### Useful Commands
 
-## 1. Start Docker Desktop Kubernetes
-
-Make sure Docker Desktop Kubernetes is running.
-
-Check the cluster:
+Check cluster nodes:
 
 ```bash
 kubectl get nodes
 ```
 
-Expected:
-
-```text
-NAME                    STATUS   ROLES
-desktop-control-plane   Ready    control-plane
-```
-
-## 2. Create the Kubernetes Secret
-
-```bash
-kubectl create secret generic nilayam-secrets \
-  --from-env-file=.env
-```
-
-> Do not commit the generated Secret to Git.
-
-## 3. Deploy Nilayam
-
-Apply the Deployment:
-
-```bash
-kubectl apply -f k8s/deployment.yaml
-```
-
-Apply the Service:
-
-```bash
-kubectl apply -f k8s/service.yaml
-```
-
-## 4. Check Pods
+Check pods:
 
 ```bash
 kubectl get pods
 ```
 
-Expected:
-
-```text
-NAME                       READY   STATUS
-nilayam-xxxxxxxxxx-xxxxx   1/1     Running
-```
-
-## 5. Check the Service
+Check services:
 
 ```bash
 kubectl get services
 ```
 
-Expected:
+Check deployments:
 
-```text
-NAME              TYPE       PORT(S)
-nilayam-service   NodePort   3000:xxxxx/TCP
+```bash
+kubectl get deployments
 ```
 
-> The NodePort number may vary between environments.
+View application logs:
 
-## 6. Access Nilayam
+```bash
+kubectl logs deployment/nilayam
+```
 
-Use Kubernetes port forwarding:
+Check rollout status:
+
+```bash
+kubectl rollout status deployment/nilayam
+```
+
+Forward the service port to your local machine:
 
 ```bash
 kubectl port-forward service/nilayam-service 3000:3000
 ```
 
-Then open:
-
-```text
-http://localhost:3000
-```
-
 ---
 
-# 🏗️ Terraform
+## 🏗️ Infrastructure as Code
 
-Terraform is used to manage the AWS infrastructure as code.
-
-Instead of manually creating AWS resources through the AWS Console, infrastructure is defined in Terraform configuration files.
-
-Terraform manages resources including:
+Terraform manages the AWS infrastructure, including:
 
 - VPC
 - Subnets
@@ -678,12 +476,13 @@ Terraform manages resources including:
 - ECS Cluster
 - ECS Service
 - ECS Task Definition
+- AWS Fargate
 - Application Load Balancer
 - Target Group
 - ALB Listener
 - IAM configuration
 
-## Terraform Workflow
+### Terraform Workflow
 
 Initialise Terraform:
 
@@ -691,67 +490,26 @@ Initialise Terraform:
 terraform init
 ```
 
-Review the infrastructure changes:
+Review the proposed infrastructure changes:
 
 ```bash
 terraform plan
 ```
 
-Apply the infrastructure:
+Apply the changes:
 
 ```bash
 terraform apply
 ```
 
-Terraform state files are excluded from Git.
-
-```gitignore
-terraform/.terraform/
-terraform/*.tfstate
-terraform/*.tfstate.*
-```
+Terraform state files are excluded from Git. Terraform commands should be run from the appropriate infrastructure directory, with AWS credentials and configuration set up correctly.
 
 ---
 
-# 🛡️ Security
-
-Security considerations implemented in the project include:
-
-- Environment variables are kept outside source code
-- `.env` is excluded from Git
-- Kubernetes Secrets are used for sensitive local runtime configuration
-- Database credentials are not stored in Kubernetes YAML
-- Database credentials are not baked into the Docker image
-- AWS credentials are stored as GitHub Actions secrets
-- ECS Security Groups restrict application traffic
-- Direct public access to the ECS application port was removed
-- Application traffic enters through the Application Load Balancer
-
-## Traffic Security Model
-
-```text
-Internet
-   │
-   ▼
-ALB :80
-   │
-   │ Allowed
-   ▼
-ECS Security Group
-   │
-   ▼
-Fargate Task :3000
-```
-
-The application container is not intended to be directly exposed to the internet on port `3000`.
-
----
-
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```text
 Nilayam-FullStack-NextJS-AWS/
-
 │
 ├── .github/
 │   └── workflows/
@@ -767,7 +525,6 @@ Nilayam-FullStack-NextJS-AWS/
 │   └── seed.ts
 │
 ├── public/
-│
 ├── src/
 │   ├── app/
 │   ├── components/
@@ -777,48 +534,52 @@ Nilayam-FullStack-NextJS-AWS/
 ├── terraform/
 │   └── *.tf
 │
+├── tests/
+│   ├── e2e/
+│   ├── integration/
+│   └── lib/
+│
 ├── .dockerignore
 ├── .gitignore
 ├── Dockerfile
 ├── package.json
 ├── package-lock.json
+├── playwright.config.ts
 ├── prisma.config.ts
+├── vitest.config.ts
 └── README.md
 ```
 
 ---
 
-# 💻 Local Development
+## 💻 Local Development
 
-## Requirements
-
-Install:
+### Requirements
 
 - Node.js
 - npm
-- Docker Desktop
-- kubectl
 - Git
+- Docker Desktop (for Docker builds)
+- kubectl (for local Kubernetes work)
 
-For Kubernetes development:
-
-- Docker Desktop Kubernetes
-
-## Install Dependencies
+### Clone the Repository
 
 ```bash
-npm install
+git clone https://github.com/sai02-creator/nilayam-nextjs-aws-docker-kubernetes.git
+cd nilayam-nextjs-aws-docker-kubernetes
 ```
 
-## Configure Environment Variables
+### Install Dependencies
 
-Create:
-
-```text
-.env
+```bash
+npm ci
 ```
 
-Add the required environment variables.
+The `postinstall` script generates Prisma Client as part of dependency installation.
+
+### Configure Environment Variables
+
+Create a `.env` file with the required runtime configuration.
 
 Example:
 
@@ -826,19 +587,25 @@ Example:
 DATABASE_URL=your_database_connection_string
 ```
 
-## Generate Prisma Client
+Configure any additional variables required by your local database and authentication setup. Never commit `.env` to Git.
+
+### Generate Prisma Client
 
 ```bash
 npx prisma generate
 ```
 
-## Run Database Migrations
+### Database Migrations
+
+For local development, after configuring the database connection:
 
 ```bash
 npx prisma migrate dev
 ```
 
-## Start Development Server
+Use migrations according to the project's existing database setup and environment.
+
+### Start the Application
 
 ```bash
 npm run dev
@@ -850,239 +617,70 @@ Open:
 http://localhost:3000
 ```
 
----
-
-# 🧪 Useful Commands
-
-## Next.js
-
-Start development server:
+### Run Automated Tests
 
 ```bash
-npm run dev
+npm test
 ```
 
-Build the application:
+For browser-based end-to-end tests:
 
 ```bash
-npm run build
-```
-
-Start the production server:
-
-```bash
-npm start
-```
-
-## Docker
-
-List images:
-
-```bash
-docker images
-```
-
-List running containers:
-
-```bash
-docker ps
-```
-
-Build the application:
-
-```bash
-docker build -t nilayam:latest .
-```
-
-Run the application:
-
-```bash
-docker run --env-file .env -p 3000:3000 nilayam:latest
-```
-
-## Kubernetes
-
-Check cluster:
-
-```bash
-kubectl cluster-info
-```
-
-Check nodes:
-
-```bash
-kubectl get nodes
-```
-
-Check Pods:
-
-```bash
-kubectl get pods
-```
-
-Check Services:
-
-```bash
-kubectl get services
-```
-
-Check Deployments:
-
-```bash
-kubectl get deployments
-```
-
-Check Pod logs:
-
-```bash
-kubectl logs deployment/nilayam
-```
-
-Check Deployment status:
-
-```bash
-kubectl rollout status deployment/nilayam
-```
-
-Restart a Deployment:
-
-```bash
-kubectl rollout restart deployment/nilayam
-```
-
-Describe a Pod:
-
-```bash
-kubectl describe pod <pod-name>
-```
-
-Forward the Service to localhost:
-
-```bash
-kubectl port-forward service/nilayam-service 3000:3000
+npm run test:e2e
 ```
 
 ---
 
-# 📊 Deployment Environments
+## 🎯 Engineering Highlights
 
-| Environment | Platform                  | Purpose                         |
-| ----------- | ------------------------- | ------------------------------- |
-| Local       | Next.js                   | Application development         |
-| Local       | Docker                    | Container testing               |
-| Local       | Kubernetes                | Kubernetes learning and testing |
-| AWS         | Amazon ECR                | Container image registry        |
-| AWS         | ECS/Fargate               | Production application          |
-| AWS         | Application Load Balancer | Public traffic routing          |
-| AWS         | Terraform                 | Infrastructure as Code          |
-| GitHub      | GitHub Actions            | CI/CD                           |
+Nilayam demonstrates practical experience across:
 
----
-
-# 🎯 Engineering Skills Demonstrated
-
-This project demonstrates practical experience across:
-
-### Full-Stack Development
-
-- React
-- Next.js
+- Full-stack application development
+- React and Next.js
 - TypeScript
-- Server-side functionality
+- Node.js backend development
+- Application actions and API integration
+- PostgreSQL and Prisma
 - Authentication
-- Database integration
-- Responsive UI
-
-### Backend & Data
-
-- Node.js
-- Next.js Server Actions
-- PostgreSQL
-- Prisma ORM
-- Database migrations
-- Relational data modelling
-- User, listing and reservation relationships
-
-### Cloud & AWS
-
+- Docker containerisation
+- Automated unit, integration and end-to-end testing
+- GitHub Actions CI/CD
+- CI test gates
+- Prisma Client generation during installation and Docker builds
+- AWS ECS/Fargate
 - Amazon ECR
-- Amazon ECS
-- AWS Fargate
-- Application Load Balancer
-- Amazon VPC
-- Security Groups
-- IAM
+- Application Load Balancing
+- VPC networking and Security Groups
+- Infrastructure as Code with Terraform
+- Kubernetes fundamentals
+- Runtime secrets management
+- Cloud deployment and operational practices
 
-### Infrastructure & DevOps
+The project demonstrates the progression:
 
-- Docker
-- Containerisation
-- Terraform
-- Infrastructure as Code
-- GitHub Actions
-- Automated CI/CD
-- Container image versioning using Git commit SHA
-
-### Kubernetes
-
-- Kubernetes clusters
-- Deployments
-- Pods
-- Services
-- Secrets
-- Runtime configuration
-- Container orchestration
-- Local Kubernetes development
+```text
+Application Development
+        ↓
+Database Engineering
+        ↓
+Automated Testing
+        ↓
+Containerisation
+        ↓
+Infrastructure as Code
+        ↓
+Cloud Deployment
+        ↓
+CI/CD
+        ↓
+Container Orchestration
+```
 
 ---
 
-# 💰 Cost-Conscious Kubernetes Architecture
+## 🔮 Planned Improvements
 
-Kubernetes is intentionally running **locally** rather than using a paid Amazon EKS cluster.
-
-```text
-Kubernetes Learning
-       │
-       ▼
-Docker Desktop
-       │
-       ▼
-Local Kubernetes
-       │
-       ▼
-No EKS infrastructure required
-```
-
-This provides hands-on Kubernetes experience without creating an Amazon EKS cluster.
-
-### Current Architecture
-
-```text
-                 Production
-                     │
-                     ▼
-              AWS ECS/Fargate
-                     │
-                     ▼
-              Nilayam Application
-
-
-                  Learning
-                     │
-                     ▼
-              Docker Desktop
-                     │
-                     ▼
-             Local Kubernetes
-```
-
-**AWS ECS/Fargate remains the production deployment environment.**
-
----
-
-# 🔮 Future Improvements
-
-## AWS / Production
+### AWS
 
 - HTTPS with AWS Certificate Manager
 - Custom domain with Route 53
@@ -1092,50 +690,40 @@ This provides hands-on Kubernetes experience without creating an Amazon EKS clus
 - Centralised application logging
 - ECS autoscaling
 
-## Kubernetes
+### Kubernetes
 
-- Kubernetes readiness probes
-- Kubernetes liveness probes
+- Readiness probes
+- Liveness probes
 - Resource requests and limits
 - Horizontal Pod Autoscaling
 - Kubernetes Ingress
-- Production Kubernetes deployment with Amazon EKS
+- Production deployment using Amazon EKS
 
-## CI/CD
+### CI/CD & Observability
 
-- Automated testing in CI/CD
 - Automated database migration strategy
-
-## Observability
-
 - Application metrics
 - Infrastructure monitoring
 - Centralised logs
 - Health monitoring
+- Expanded automated test coverage
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
-## Sai Chaitanya Gaddam
+**Sai Chaitanya Gaddam**
 
-**Full-Stack Developer | Cloud & DevOps Enthusiast**
+Full-Stack Developer | Cloud & DevOps Enthusiast
 
 ### Technologies
 
-- JavaScript
-- TypeScript
-- React
-- Next.js
-- Node.js
-- PostgreSQL
-- Prisma
-- Docker
-- AWS
-- Terraform
-- GitHub Actions
-- Kubernetes
+JavaScript · TypeScript · React · Next.js · Node.js · PostgreSQL · Prisma · Docker · AWS · Terraform · GitHub Actions · Kubernetes
 
 ---
+
+## ⭐ Project Goal
+
+Nilayam was built to demonstrate more than application development. It shows how a modern full-stack application can be **developed, tested, containerised, provisioned, deployed, automated and operated** using modern software engineering, cloud and DevOps practices.
 
 **Built with ❤️ by Sai Chaitanya Gaddam**
