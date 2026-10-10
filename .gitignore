@@ -45,3 +45,7 @@ next-env.d.ts
 terraform/.terraform/
 terraform/*.tfstate
 terraform/*.tfstate.*
+# Playwright test output
+/test-results/
+/playwright-report/
+/blob-report/
