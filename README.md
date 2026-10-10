@@ -79,13 +79,55 @@ Nilayam is an Airbnb-style accommodation marketplace where users can:
 ### DevOps & Containers
 
 - Docker
-- GitHub Actions
 - GitHub Actions CI/CD
 - Vitest
 - Playwright
 - Testing Library
 - Kubernetes
 - Kubernetes Secrets
+
+---
+
+## 🧪 Testing
+
+Testing is integrated into the development workflow and GitHub Actions pipeline to help identify regressions before deployment.
+
+### Current Test Coverage
+
+| Test Type                   | Tool            | Coverage                            |
+| --------------------------- | --------------- | ----------------------------------- |
+| Unit tests                  | Vitest          | Booking rules and date utilities    |
+| Integration tests           | Vitest          | Application action behaviour        |
+| End-to-end tests            | Playwright      | Homepage smoke test using Chromium  |
+| Component testing utilities | Testing Library | Utilities for testing UI components |
+
+### Run Tests Locally
+
+Run unit and integration tests:
+
+```bash
+npm test
+```
+
+Run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
+Run the Playwright end-to-end test:
+
+```bash
+npm run test:e2e
+```
+
+### Test Results
+
+- Vitest: 10 tests passed across 3 test files.
+- Playwright: 1 homepage end-to-end test passed.
+- GitHub Actions: the configured test and deployment workflow completed successfully.
+
+These results describe the current test suite and do not imply comprehensive coverage of every application feature.
 
 ---
 
@@ -209,33 +251,13 @@ Vitest is used to test application logic, including booking rules, date utilitie
 
 Playwright with Chromium is used to test the application through a browser. The current end-to-end suite includes a homepage smoke test.
 
-**Prisma Client generation**
+### Prisma Client Generation
 
 Prisma Client is generated during dependency installation using the `postinstall` script in `package.json`. The Docker build also explicitly generates Prisma Client before building the production application.
 
-**Deployment gate**
+### Deployment Gate
 
 The deployment job depends on the automated test job. If the test job fails, the deployment job does not proceed.
-
-### Run Tests Locally
-
-Run the Vitest suite:
-
-```bash
-npm test
-```
-
-Run tests in watch mode:
-
-```bash
-npm run test:watch
-```
-
-Run the Playwright end-to-end suite:
-
-```bash
-npm run test:e2e
-```
 
 ### Build the Docker Image
 
@@ -393,20 +415,20 @@ Kubernetes is used locally for container orchestration practice and development.
 
 ```text
 Docker Desktop
-      │
-      ▼
+     │
+     ▼
 Kubernetes Cluster
-      │
-      ▼
+     │
+     ▼
 Deployment
-      │
-      ▼
+     │
+     ▼
 Pod
-      │
-      ▼
+     │
+     ▼
 Nilayam Container
-      │
-      ▼
+     │
+     ▼
 Kubernetes Service
 ```
 
@@ -617,18 +639,6 @@ Open:
 http://localhost:3000
 ```
 
-### Run Automated Tests
-
-```bash
-npm test
-```
-
-For browser-based end-to-end tests:
-
-```bash
-npm run test:e2e
-```
-
 ---
 
 ## 🎯 Engineering Highlights
@@ -660,19 +670,19 @@ The project demonstrates the progression:
 
 ```text
 Application Development
-        ↓
+       ↓
 Database Engineering
-        ↓
+       ↓
 Automated Testing
-        ↓
+       ↓
 Containerisation
-        ↓
+       ↓
 Infrastructure as Code
-        ↓
+       ↓
 Cloud Deployment
-        ↓
+       ↓
 CI/CD
-        ↓
+       ↓
 Container Orchestration
 ```
 
@@ -716,14 +726,6 @@ Container Orchestration
 
 Full-Stack Developer | Cloud & DevOps Enthusiast
 
-### Technologies
-
-JavaScript · TypeScript · React · Next.js · Node.js · PostgreSQL · Prisma · Docker · AWS · Terraform · GitHub Actions · Kubernetes
-
 ---
-
-## ⭐ Project Goal
-
-Nilayam was built to demonstrate more than application development. It shows how a modern full-stack application can be **developed, tested, containerised, provisioned, deployed, automated and operated** using modern software engineering, cloud and DevOps practices.
 
 **Built with ❤️ by Sai Chaitanya Gaddam**
