@@ -14,6 +14,14 @@ The project source code remains available in this repository. Although the live 
 
 **Note:** The application was developed and deployed successfully. Its hosting was discontinued as a cost-management decision, not because of a technical issue.
 
+## Project Demonstration
+
+Watch the Nilayam application walkthrough:
+
+[![Nilayam Demo](https://img.youtube.com/vi/0Q30ypn-rFA/0.jpg)](https://youtu.be/0Q30ypn-rFA)
+
+[Watch the Full Demo on YouTube](https://youtu.be/0Q30ypn-rFA)
+
 ### AWS Infrastructure Costs
 
 During deployment and operation, the following AWS resources contributed to infrastructure costs:
