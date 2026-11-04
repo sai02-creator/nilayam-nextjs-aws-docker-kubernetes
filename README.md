@@ -4,10 +4,28 @@ A production-deployed, full-stack accommodation marketplace built with **Next.js
 
 Nilayam demonstrates the complete software delivery lifecycle — from application development and database design through containerisation, Infrastructure as Code, automated testing, CI/CD, cloud deployment, and container orchestration.
 
-## 🚀 Live Application
+## Deployment Status
 
-**Production:**  
-http://nilayam-alb-1594002907.ap-southeast-2.elb.amazonaws.com
+The application was previously deployed on **Amazon Web Services (AWS)** using Amazon ECS, AWS Fargate, and an Application Load Balancer.
+
+The AWS deployment has since been decommissioned to avoid ongoing cloud infrastructure costs. The ECS service, cluster, load balancer, target group, container repository, and associated application secrets have been removed.
+
+The project source code remains available in this repository. Although the live demo is currently unavailable, you can explore the implementation, application architecture, and features by reviewing the source code.
+
+**Note:** The application was developed and deployed successfully. Its hosting was discontinued as a cost-management decision, not because of a technical issue.
+
+### AWS Infrastructure Costs
+
+During deployment and operation, the following AWS resources contributed to infrastructure costs:
+
+- **Amazon ECS / AWS Fargate:** Container compute charges based on allocated CPU and memory.
+- **Elastic Load Balancing:** Charges for the Application Load Balancer used to distribute incoming application traffic.
+- **Amazon VPC / Public IPv4:** Networking and public IPv4 address usage charges.
+- **AWS Secrets Manager:** Charges for storing application secrets, including authentication credentials and database connection details.
+- **Amazon ECR:** Storage charges for Docker container images.
+- **Amazon CloudWatch:** Application logging and monitoring resources.
+
+These resources were reviewed and decommissioned to prevent unnecessary ongoing cloud infrastructure expenses.
 
 ### Production Environment
 
