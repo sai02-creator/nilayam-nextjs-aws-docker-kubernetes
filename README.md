@@ -16,8 +16,6 @@ The project source code remains available in this repository. Although the live 
 
 ## 🎥 Project Demonstration
 
-Watch the full application walkthrough, showcasing Nilayam's key features, user experience, and AWS deployment.
-
 [![Nilayam – Full-Stack Application Demonstration](https://img.youtube.com/vi/0Q30ypn-rFA/0.jpg)](https://youtu.be/0Q30ypn-rFA)
 
 [▶ Watch the Full Demo on YouTube](https://youtu.be/0Q30ypn-rFA)
