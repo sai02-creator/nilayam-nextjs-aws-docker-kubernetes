@@ -14,13 +14,13 @@ The project source code remains available in this repository. Although the live 
 
 **Note:** The application was developed and deployed successfully. Its hosting was discontinued as a cost-management decision, not because of a technical issue.
 
-## Project Demonstration
+## 🎥 Project Demonstration
 
-Watch the Nilayam application walkthrough:
+Watch the full application walkthrough, showcasing Nilayam's key features, user experience, and AWS deployment.
 
-[![Nilayam Demo](https://img.youtube.com/vi/0Q30ypn-rFA/0.jpg)](https://youtu.be/0Q30ypn-rFA)
+[![Nilayam – Full-Stack Application Demonstration](https://img.youtube.com/vi/0Q30ypn-rFA/0.jpg)](https://youtu.be/0Q30ypn-rFA)
 
-[Watch the Full Demo on YouTube](https://youtu.be/0Q30ypn-rFA)
+[▶ Watch the Full Demo on YouTube](https://youtu.be/0Q30ypn-rFA)
 
 ### AWS Infrastructure Costs
 
