@@ -16,9 +16,9 @@ The project source code remains available in this repository. Although the live 
 
 ## 🎥 Project Demonstration
 
-[![Nilayam – Full-Stack Application Demonstration](https://img.youtube.com/vi/0Q30ypn-rFA/0.jpg)](https://youtu.be/0Q30ypn-rFA)
+[![Nilayam – Full-Stack Application Demonstration](https://img.youtube.com/vi/wRVaUsFgO-0/0.jpg)](https://youtu.be/wRVaUsFgO-0)
 
-[▶ Watch the Full Demo on YouTube](https://youtu.be/0Q30ypn-rFA)
+[▶ Watch the Full Demo on YouTube](https://youtu.be/wRVaUsFgO-0)
 
 ### AWS Infrastructure Costs
 
